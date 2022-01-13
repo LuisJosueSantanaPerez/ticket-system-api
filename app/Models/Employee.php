@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Employees extends Model
+class Employee extends Model
 {
     use HasFactory;
 
@@ -19,7 +19,7 @@ class Employees extends Model
         'last_name',
         'email',
         'department_id',
-        'is_active',
+        'activated',
     ];
 
     /**
@@ -30,11 +30,11 @@ class Employees extends Model
     protected $casts = [
         'id' => 'integer',
         'department_id' => 'integer',
-        'is_active' => 'boolean',
+        'activated' => 'boolean',
     ];
 
     public function department()
     {
-        return $this->belongsTo(\App\Models\Departments::class);
+        return $this->belongsTo(Department::class);
     }
 }
