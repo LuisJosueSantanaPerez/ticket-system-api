@@ -1,0 +1,10 @@
+created:
+    - database/factories/DepartmentsFactory.php
+    - database/factories/EmployeesFactory.php
+    - database/migrations/2022_01_13_024312_create_departments_table.php
+    - database/migrations/2022_01_13_024313_create_employees_table.php
+    - app/Models/Departments.php
+    - app/Models/Employees.php
+models:
+    Departments: { id: 'id unique index', description: 'string:50', is_active: 'boolean default:true', relationships: { hasMany: Employees } }
+    Employees: { id: 'id unique index', first_name: 'string:50', last_name: 'string:50', email: 'string:50', department_id: 'int foreign', is_active: 'boolean default:true' }
