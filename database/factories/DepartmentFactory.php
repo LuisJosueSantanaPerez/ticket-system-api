@@ -4,16 +4,16 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Departments;
+use App\Models\Department;
 
-class DepartmentsFactory extends Factory
+class DepartmentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Departments::class;
+    protected $model = Department::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +23,8 @@ class DepartmentsFactory extends Factory
     public function definition()
     {
         return [
-            'description' => substr($this->faker->text, 1, 49),
-            'is_active' => $this->faker->boolean,
+            'description' => $this->faker->text(50),
+            'activated' => $this->faker->boolean,
         ];
     }
 }
