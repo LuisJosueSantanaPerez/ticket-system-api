@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Departments extends Model
+class Department extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +17,7 @@ class Departments extends Model
      */
     protected $fillable = [
         'description',
-        'is_active',
+        'activated',
     ];
 
     /**
@@ -26,11 +27,11 @@ class Departments extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'is_active' => 'boolean',
+        'activated' => 'boolean',
     ];
 
     public function employees()
     {
-        return $this->hasMany(Employees::class);
+        return $this->hasMany(Employee::class);
     }
 }
