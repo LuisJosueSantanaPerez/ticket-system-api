@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\StoreDepartment;
+use App\Http\Requests\V1\StoreDepartment;
 use App\Http\Resources\V1\DepartmentCollection;
 use App\Http\Resources\V1\DepartmentResource;
 use App\Models\Department;
@@ -49,7 +49,7 @@ class DepartmentController extends Controller
             $department->activated = $request->activated;
             $department->save();
             DB::commit();
-            return $this->success('Created', [], 201);
+            return $this->success('Success', [], 201);
         } catch (Exception $e) {
             DB::rollBack();
             return $this->failure("failure => $e");
@@ -102,12 +102,15 @@ class DepartmentController extends Controller
         try {
             DB::beginTransaction();
             $department = Department::find((int)$id);
+            if (!$department) {
+                return $this->failure("Identity does not exist");
+            }
             $department->delete();
             DB::commit();
             return $this->success('Success', null ,204);
         } catch (Exception $e) {
             DB::rollBack();
-            return $this->failure("failure => $e");
+            return $this->failure($e->getMessage());
         }
     }
 }
