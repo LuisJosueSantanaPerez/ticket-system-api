@@ -4,15 +4,20 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\StoreDepartment;
+use App\Http\Resources\V1\DepartmentCollection;
 use App\Http\Resources\V1\DepartmentResource;
 use App\Models\Department;
 use App\Traits\RespondsWithHttpStatus;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection as AnonymousResourceCollectionAlias;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use JetBrains\PhpStorm\NoReturn;
 
 class DepartmentController extends Controller
 {
@@ -21,16 +26,12 @@ class DepartmentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Application|ResponseFactory|Response
+     * @param Request $request
+     * @return DepartmentCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        try {
-
-        } catch (\Exception $e){
-            return $this->failure("failure => $e");
-        }
-        return $this->success('Success', DepartmentResource::collection(Department::all()));
+        return new DepartmentCollection(filtersResources($request->all(),'departments'));
     }
 
     /**
@@ -49,7 +50,7 @@ class DepartmentController extends Controller
             $department->save();
             DB::commit();
             return $this->success('Created', [], 201);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return $this->failure("failure => $e");
         }
@@ -59,7 +60,7 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Department  $department
+     * @param Department $department
      * @return DepartmentResource
      */
     public function show(Department $department): DepartmentResource
@@ -84,7 +85,7 @@ class DepartmentController extends Controller
             $department->save();
             DB::commit();
             return $this->success('Success', []);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return $this->failure("failure => $e");
         }
@@ -104,7 +105,7 @@ class DepartmentController extends Controller
             $department->delete();
             DB::commit();
             return $this->success('Success', null ,204);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return $this->failure("failure => $e");
         }
