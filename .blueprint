@@ -1,10 +1,12 @@
 created:
-    - database/factories/DepartmentsFactory.php
-    - database/factories/EmployeesFactory.php
-    - database/migrations/2022_01_13_024312_create_departments_table.php
-    - database/migrations/2022_01_13_024313_create_employees_table.php
-    - app/Models/Departments.php
-    - app/Models/Employees.php
+    - database/factories/DepartmentFactory.php
+    - database/factories/EmployeeFactory.php
+    - database/migrations/2022_01_13_060708_create_departments_table.php
+    - database/migrations/2022_01_13_060709_create_employees_table.php
+    - app/Models/Department.php
+    - app/Models/Employee.php
 models:
     Departments: { id: 'id unique index', description: 'string:50', is_active: 'boolean default:true', relationships: { hasMany: Employees } }
     Employees: { id: 'id unique index', first_name: 'string:50', last_name: 'string:50', email: 'string:50', department_id: 'int foreign', is_active: 'boolean default:true' }
+    Department: { id: 'id unique index', description: 'string:50', activated: 'boolean default:true', relationships: { hasMany: Employee } }
+    Employee: { id: 'id unique index', first_name: 'string:50', last_name: 'string:50', email: 'string:50', department_id: 'int foreign', activated: 'boolean default:true' }

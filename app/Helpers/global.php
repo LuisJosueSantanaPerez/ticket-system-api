@@ -29,14 +29,14 @@ function filtersResources(array $filters = [], string $table = "")
             $query->select(DB::raw($value));
             continue;
         }
-        if ($key == "delete_at") {
-            $query->whereNull('delete_at');
+        if ($key == "deleted_at") {
+            $query->whereNull('deleted_at');
             continue;
         }
 
-//        if($key == "activated"){
-//            $query->where()
-//        }
+        if($key == "activated"){
+            $query->where("activated", '=' , $value);
+        }
 
         if ($key == "per_page")
             continue;
