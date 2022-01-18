@@ -13,19 +13,17 @@ class CreateEmployeesTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::create('employees', function (Blueprint $table) {
             $table->id()->unique()->index();
             $table->string('first_name', 50);
             $table->string('last_name', 50);
-            $table->string('email', 50);
-            $table->foreignId('department_id')->constrained('departments', 'id');
-            $table->boolean('is_active')->default(true);
+            $table->string('email', 255)->unique()->index();
+            $table->string('password', 255);
+            $table->timestamp('email_verified_at');
+            $table->boolean('activated')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDepartmentsTable extends Migration
+class CreateStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->id()->unique()->index();
-            $table->string('description', 50);
-            $table->boolean('is_active')->default(true);
+            $table->string('name', 50);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('statuses');
     }
 }
