@@ -15,6 +15,7 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id()->unique()->index();
+            $table->string('number', 11)->index();
             $table->string('first_name', 50);
             $table->string('last_name', 50);
             $table->string('email', 255)->unique()->index();

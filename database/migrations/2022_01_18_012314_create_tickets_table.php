@@ -17,7 +17,7 @@ class CreateTicketsTable extends Migration
 
         Schema::create('tickets', function (Blueprint $table) {
             $table->id()->unique()->index();
-            $table->string('number', 6)->index();
+            $table->string('number', 11)->index();
             $table->timestamp('date')->index();
             $table->string('title', 50);
             $table->text('description');

@@ -2,29 +2,24 @@
 
 namespace App\Http\Resources\V1;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JsonSerializable;
 
-/**
- * @property mixed $id
- * @property mixed $description
- * @property mixed $is_active
- */
-class DepartmentResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @param  Request  $request
-     * @return array
+     * @return array|Arrayable|JsonSerializable
      */
     public function toArray($request)
     {
         return [
             'id' => $this->id,
-            'created_at' => $this->created_at,
-            'description' => $this->description,
-            'activated' => $this->activated
+            'name' => $this->name
         ];
     }
 }

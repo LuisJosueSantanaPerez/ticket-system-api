@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Employee;
-use App\Models\Entry;
+use App\Models\TimeEntry;
 
 class EntryFactory extends Factory
 {
@@ -14,7 +14,7 @@ class EntryFactory extends Factory
      *
      * @var string
      */
-    protected $model = Entry::class;
+    protected $model = TimeEntry::class;
 
     /**
      * Define the model's default state.
