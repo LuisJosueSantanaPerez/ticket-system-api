@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticable;
 
-class Employee extends Model
+class Employee extends Authenticable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -15,11 +20,25 @@ class Employee extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
+        'number',
+        'created_at',
         'first_name',
         'last_name',
+        'password',
         'email',
-        'department_id',
-        'activated',
+        'email_verified_at',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'deleted_at',
+        'updated_at',
+        'activated'
     ];
 
     /**
@@ -29,12 +48,32 @@ class Employee extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'department_id' => 'integer',
+        'email_verified_at' => 'timestamp',
         'activated' => 'boolean',
     ];
 
-    public function department()
+    public function tickets()
     {
-        return $this->belongsTo(Department::class);
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function timeEntry()
+    {
+        return $this->hasMany(TimeEntry::class);
+    }
+
+    public function assigned() {
+        return $this->belongsToMany(Ticket::class, "tracking_ticket_employees");
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            $model->number = IdGenerator::generate(
+                ['table' => 'employees', 'length' => 11, 'prefix' =>'EMPL-', 'field'=> 'number']
+            );
+        });
     }
 }

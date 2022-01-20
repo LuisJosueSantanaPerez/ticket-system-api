@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use App\Models\Department;
 use App\Models\Employee;
 
 class EmployeeFactory extends Factory
@@ -27,7 +27,8 @@ class EmployeeFactory extends Factory
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->safeEmail,
-            'department_id' => Department::factory(),
+            'password' => Hash::make("password"),
+            'email_verified_at' => $this->faker->dateTime(),
             'activated' => $this->faker->boolean,
         ];
     }

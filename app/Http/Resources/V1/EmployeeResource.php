@@ -25,7 +25,7 @@ class EmployeeResource extends JsonResource
             'first_name'=> $this->first_name,
             'last_name'=> $this->last_name,
             'email' => $this->email,
-            'activated' => ($this->activated)? 'Active': 'Inactive'
+            'activated' => $this->activated
         ];
     }
 }
