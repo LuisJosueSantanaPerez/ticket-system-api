@@ -51,7 +51,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function (){
         ->only(['index','store', 'show', 'update', 'destroy']);
     // assigned-tickets-employees
     Route::apiResource("assigned-tickets-employees", TicketEmployeeV1::class)
-        ->only(['index']);
+        ->only(['index', 'show']);
     // employees-assigneds-tickets
     Route::apiResource("employees-assigneds-tickets", EmployeeTicketV1::class)
         ->only(['index']);
