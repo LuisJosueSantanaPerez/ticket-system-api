@@ -21,7 +21,6 @@ class CreateTrackingTicketEmployeesTable extends Migration
             $table->foreignId('employee_id')->constrained('employees')->onDelete('NO ACTION');
             $table->timestamps();
         });
-
         Schema::enableForeignKeyConstraints();
     }
 
