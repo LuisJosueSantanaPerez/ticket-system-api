@@ -85,6 +85,7 @@ class TimeEntryController extends Controller
             $timeEntry->date_to = $request->date_to;
             $timeEntry->note = $request->note;
             $timeEntry->save();
+            $timeEntry->tickets()->sync($request->ticket_id);
             return $this->success('Success', null, 'tickets');
         } catch (Exception $e) {
             DB::rollBack();

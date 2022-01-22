@@ -31,6 +31,6 @@ class CreateTimeEntryTicketTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entry_ticket');
+        Schema::dropIfExists('time_entry_ticket');
     }
 }
