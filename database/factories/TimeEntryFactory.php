@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Employee;
 use App\Models\TimeEntry;
 
-class EntryFactory extends Factory
+class TimeEntryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

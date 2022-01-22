@@ -2,20 +2,18 @@
 
 namespace App\Http\Resources\V1;
 
-use App\Http\Resources\V1\DepartmentResource;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use JsonSerializable;
 
-class DepartmentCollection extends ResourceCollection
+class PriorityCollection extends ResourceCollection
 {
-    // public $collects = DepartmentResource::class;
     /**
      * Transform the resource collection into an array.
      *
      * @param  Request  $request
-     * @return array
+     * @return array|Arrayable|JsonSerializable
      */
     public function toArray($request)
     {
@@ -23,17 +21,17 @@ class DepartmentCollection extends ResourceCollection
             'success' => true,
             'message' => 'Success',
             'data' => $this->collection,
-            'meta' => [
-                'organization' => 'NTI'
-            ],
-            'type'=> 'departments',
             'pagination' => [
                 'total' => $this->total(),
                 'count' => $this->count(),
                 'per_page' => (int)$this->perPage(),
                 'current_page' => $this->currentPage(),
                 'total_pages' => $this->lastPage()
-            ]
+            ],
+            'meta' => [
+                'organization' => 'NTI'
+            ],
+            'type'=> 'priorities'
         ];
     }
 
@@ -49,6 +47,7 @@ class DepartmentCollection extends ResourceCollection
             $jsonResponse['meta']['per_page'],
             $jsonResponse['meta']['to'],
             $jsonResponse['meta']['total'],
+            $jsonResponse['meta']['path'],
         );
         $response->setContent(json_encode($jsonResponse));
     }

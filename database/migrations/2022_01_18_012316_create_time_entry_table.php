@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEntriesTable extends Migration
+class CreateTimeEntryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateEntriesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('entries', function (Blueprint $table) {
+        Schema::create('time_entry', function (Blueprint $table) {
             $table->id()->unique()->index();
             $table->foreignId('employee_id')->constrained('employees');
             $table->timestamp('date_from');
@@ -35,6 +35,6 @@ class CreateEntriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entries');
+        Schema::dropIfExists('time_entry');
     }
 }

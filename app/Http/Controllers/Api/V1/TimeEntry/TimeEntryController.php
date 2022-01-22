@@ -3,41 +3,55 @@
 namespace App\Http\Controllers\Api\V1\TimeEntry;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreTimeEntryRequest;
+use App\Http\Resources\V1\TimeEntryCollection;
 use App\Http\Resources\V1\TimeEntryResource;
 use App\Models\TimeEntry;
+use App\Models\TimeEntryTicket;
+use App\Traits\RespondsWithHttpStatus;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use PHPUnit\Exception;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Exception;
 
 class TimeEntryController extends Controller
 {
+    use RespondsWithHttpStatus;
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return TimeEntryResource::collection(TimeEntry::all()) ;
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreTimeEntryRequest $request
+     * @return Response
      */
-    public function store(TimeEntryRequest $request)
+    public function store(StoreTimeEntryRequest $request)
     {
         try {
             DB::beginTransaction();
-            TimeEntry::create([
+
+            $timeEntry = TimeEntry::create([
                 'employee_id' => $request->employee_id,
-                'ticket_id' => $request->ticket_id,
                 'date_from' => $request->date_from,
                 'date_to' => $request->date_to,
                 'note' => $request->note
             ]);
+
+            TimeEntryTicket::create([
+                'time_entry_id' => $timeEntry->id,
+                'ticket_id' => $request->ticket_id,
+            ]);
+
             DB::commit();
             return $this->success('Success', null, 'statuses',201);
         } catch (Exception $e){
@@ -49,34 +63,53 @@ class TimeEntryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TimeEntry  $entry
-     * @return \Illuminate\Http\Response
+     * @param TimeEntry $timeEntry
+     * @return TimeEntryResource
      */
-    public function show(TimeEntry $entry)
+    public function show(TimeEntry $timeEntry)
     {
-        //
+        return new TimeEntryResource($timeEntry);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TimeEntry  $entry
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param TimeEntry $timeEntry
+     * @return Response
      */
-    public function update(Request $request, TimeEntry $entry)
+    public function update(Request $request, TimeEntry $timeEntry)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $timeEntry->employee_id = $request->employee_id;
+            $timeEntry->date_from = $request->date_from;
+            $timeEntry->date_to = $request->date_to;
+            $timeEntry->note = $request->note;
+            $timeEntry->save();
+            return $this->success('Success', null, 'tickets');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return $this->failure("failure => $e");
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TimeEntry  $entry
-     * @return \Illuminate\Http\Response
+     * @param TimeEntry $timeEntry
+     * @return Response
      */
-    public function destroy(TimeEntry $entry)
+    public function destroy(TimeEntry $timeEntry)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $timeEntry->delete();
+            DB::commit();
+            return $this->success('Success', null , 'time-entry',204);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return $this->failure($e->getMessage(), 'time-entry');
+        }
     }
 }

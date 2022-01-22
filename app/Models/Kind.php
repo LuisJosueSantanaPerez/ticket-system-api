@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Department extends Model
+class Kind extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -16,8 +16,13 @@ class Department extends Model
      * @var array
      */
     protected $fillable = [
-        'description',
-        'activated',
+        'name',
+    ];
+
+    protected $hidden = [
+        'deleted_at',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -27,11 +32,10 @@ class Department extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'activated' => 'boolean',
     ];
 
-    public function employees()
+    public function tickets()
     {
-        return $this->hasMany(Employee::class);
+        return $this->hasMany(Ticket::class);
     }
 }
