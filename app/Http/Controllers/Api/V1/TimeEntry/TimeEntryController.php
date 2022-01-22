@@ -22,11 +22,12 @@ class TimeEntryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return AnonymousResourceCollection
+     * @return TimeEntryCollection
      */
     public function index(Request $request)
     {
-        return TimeEntryResource::collection(TimeEntry::all()) ;
+
+        return new TimeEntryCollection(TimeEntry::all());
     }
 
     /**
@@ -47,10 +48,7 @@ class TimeEntryController extends Controller
                 'note' => $request->note
             ]);
 
-            TimeEntryTicket::create([
-                'time_entry_id' => $timeEntry->id,
-                'ticket_id' => $request->ticket_id,
-            ]);
+            $timeEntry->tickets()->attach($request->ticket_id);
 
             DB::commit();
             return $this->success('Success', null, 'statuses',201);
