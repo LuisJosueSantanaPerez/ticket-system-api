@@ -48,9 +48,10 @@ class Ticket extends Model
         'employee_id' => 'integer',
     ];
 
-    public function timeEntry()
+    public function entries()
     {
-        return $this->belongsToMany(TimeEntry::class);
+        return $this->belongsToMany(TimeEntry::class,
+            'time_entry_ticket', 'ticket_id','time_entry_id')->withTimestamps();
     }
 
     public function trackingTicketEmployees()
@@ -80,7 +81,7 @@ class Ticket extends Model
 
 
     public function employees() {
-        return $this->belongsToMany(Employee::class, "tracking_ticket_employees");
+        return $this->belongsToMany(Employee::class, "tracking_ticket_employees")->withTimestamps();
     }
 
     public function employee()
