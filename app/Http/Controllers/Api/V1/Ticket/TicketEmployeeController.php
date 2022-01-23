@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Api\V1\Ticket;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TicketEmployeeCollection;
+use App\Http\Resources\V1\TicketEmployeeResource;
 use App\Models\Ticket;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 class TicketEmployeeController extends Controller
@@ -32,22 +36,21 @@ class TicketEmployeeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return TicketEmployeeResource
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Ticket $ticket
-     * @return Response
+     * @param $id
+     * @return TicketEmployeeResource|Builder[]|Collection
      */
-    public function show(Ticket $ticket)
+    public function show($id)
     {
-        //
+        return new TicketEmployeeResource(Ticket::with("employees")->find((int)$id));
     }
 
     /**
