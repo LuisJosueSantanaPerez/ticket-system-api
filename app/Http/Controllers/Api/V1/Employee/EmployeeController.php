@@ -33,7 +33,7 @@ class EmployeeController extends Controller
     {
         return new EmployeeCollection(
             Employee::where([
-                    ['activated', 'like', '%' . $request->get('q') . '%'],
+                    ["first_name", 'like', '%' . $request->get('q') . '%'],
                     ['activated', '=' , $request->get('activated')],
                 ])
                 ->paginate(
