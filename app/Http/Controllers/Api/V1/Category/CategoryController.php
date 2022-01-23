@@ -25,14 +25,13 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        if(sizeof($request->all())){
-            return new CategoryCollection(
-                filtersResources($request->all(),'name',
-                    'categories')
-            );
-        }
 
-        return $this->success('Success', Category::all(), 'categories');
+        return new CategoryCollection(
+            Category::where('name', 'like', '%' . $request->get('q') . '%')
+                ->paginate(
+                    (int)$request->get('per_page')
+                )
+        );
     }
 
     /**
