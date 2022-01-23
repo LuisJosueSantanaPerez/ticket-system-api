@@ -33,9 +33,13 @@ class TicketController extends Controller
     {
         return new TicketCollection(
             Ticket::where('title', 'like', '%' . $request->get('q') . '%')
+                ->orWhere('category_id', '=', $request->get('category'))
+                ->orWhere('kind_id', '=', $request->get('kind'))
+                ->orWhere('priority_id', '=', $request->get('priority'))
+                ->orWhere('status_id', '=', $request->get('status'))
                 ->paginate(
-                    (int)$request->get('per_page')
-                )
+                (int)$request->get('per_page')
+            )
         );
     }
 
@@ -97,6 +101,7 @@ class TicketController extends Controller
             $ticket->status_id = $request->status_id;
             $ticket->description = $request->description;
             $ticket->save();
+            $ticket->employees()->sync($request->employees);
             DB::commit();
             return $this->success('Success', null, 'tickets');
         } catch (Exception $e) {
