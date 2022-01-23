@@ -25,15 +25,12 @@ class StatusController extends Controller
      */
     public function index(Request $request)
     {
-
-        if (sizeof($request->all())){
-            return new StatusCollection(
-                filtersResources($request->all(),'name',
-                    'statuses')
-            );
-        }
-
-        return $this->success('Success', Status::all() , 'statuses');
+        return new StatusCollection(
+            Status::where('name', 'like', '%' . $request->get('q') . '%')
+                ->paginate(
+                    (int)$request->get('per_page')
+                )
+        );
     }
 
     /**
