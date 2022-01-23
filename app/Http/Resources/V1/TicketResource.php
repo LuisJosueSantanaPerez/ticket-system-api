@@ -3,6 +3,7 @@
 namespace App\Http\Resources\V1;
 
 use App\Models\Kind;
+use App\Models\TimeEntryTicket;
 use App\Models\TrackingTicketEmployee;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
@@ -23,7 +24,7 @@ class TicketResource extends JsonResource
         return [
             'id'=> $this->id,
             "ticket_number" => $this->number,
-            "date" => Carbon::parse($this->created_at)->format('d/m/Y'),
+            "date" => Carbon::parse($this->created_at)->format('d/m/Y H:m:s'),
             "title" => $this->title,
             "description" => $this->description,
             "created_by" =>  $this->employee->first_name .' '. $this->employee->last_name,
@@ -42,7 +43,8 @@ class TicketResource extends JsonResource
             "status" => [
                 'id' => $this->status->id,
                 "name" =>$this->status->name
-            ]
+            ],
+            "entries" => TicketTimeEntryResource::collection($this->entries)
         ];
     }
 }
