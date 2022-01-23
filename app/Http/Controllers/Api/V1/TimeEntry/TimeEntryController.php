@@ -76,18 +76,19 @@ class TimeEntryController extends Controller
      * @param TimeEntry $timeEntry
      * @return Response
      */
-    public function update(Request $request, TimeEntry $timeEntry)
+    public function update(Request $request,TimeEntry $timeEntry)
     {
         try {
             DB::beginTransaction();
-            $timeEntry->employee_id = $request->employee_id;
-            $timeEntry->date_from = $request->date_from;
-            $timeEntry->date_to = $request->date_to;
-            $timeEntry->note = $request->note;
-            $timeEntry->save();
-            $timeEntry->tickets()->sync($request->ticket_id);
-            return $this->success('Success', null, 'tickets');
-        } catch (Exception $e) {
+            $timeEntry->updateOrFail([
+                'employee_id' => $request->employee_id,
+                'date_from' => $request->date_from,
+                'date_to' => $request->date_to,
+                'note' => $request->note
+            ]);
+            DB::commit();
+            return $this->success('Success', null, 'time-entry');
+        } catch (\Throwable $e) {
             DB::rollBack();
             return $this->failure("failure => $e");
         }
