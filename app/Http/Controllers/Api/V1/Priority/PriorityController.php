@@ -25,14 +25,9 @@ class PriorityController extends Controller
      */
     public function index(Request $request)
     {
-        if (sizeof($request->all())){
-            return new PriorityCollection(
-                filtersResources($request->all(),'name',
-                    'priorities')
-            );
-        }
-
-        return $this->success('Success', Priority::all() , 'priorities');
+        return new PriorityCollection(
+            Priority::where('name', 'like', '%' .
+                $request->get('q') . '%')->paginate((int)$request->get('per_page')));
     }
 
     /**
