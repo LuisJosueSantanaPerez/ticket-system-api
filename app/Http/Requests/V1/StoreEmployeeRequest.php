@@ -34,7 +34,10 @@ class StoreEmployeeRequest extends FormRequest
             'activated' => 'required|bool',
         ];
     }
-
+    /**
+     * @param Validator $validator
+     * @return void
+     */
     protected function failedValidation(Validator $validator) {
         throw new HttpResponseException(response()->json($validator->errors()->all(), 422));
     }

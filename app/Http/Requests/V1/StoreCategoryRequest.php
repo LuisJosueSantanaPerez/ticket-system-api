@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\V1;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -24,7 +26,15 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:2|string'
         ];
     }
+    /**
+     * @param Validator $validator
+     * @return void
+     */
+    protected function failedValidation(Validator $validator) {
+        throw new HttpResponseException(response()->json($validator->errors()->all(), 422));
+    }
+
 }

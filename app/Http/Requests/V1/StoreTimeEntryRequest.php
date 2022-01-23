@@ -32,7 +32,10 @@ class StoreTimeEntryRequest extends FormRequest
             'note' => ''
         ];
     }
-
+    /**
+     * @param Validator $validator
+     * @return void
+     */
     protected function failedValidation(Validator $validator) {
         throw new HttpResponseException(response()->json($validator->errors()->all(), 422));
     }

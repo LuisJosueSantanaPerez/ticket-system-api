@@ -29,7 +29,10 @@ class StoreKindRequest extends FormRequest
             'name' => 'required|min:2|string'
         ];
     }
-
+    /**
+     * @param Validator $validator
+     * @return void
+     */
     protected function failedValidation(Validator $validator) {
         throw new HttpResponseException(response()->json($validator->errors()->all(), 422));
     }
