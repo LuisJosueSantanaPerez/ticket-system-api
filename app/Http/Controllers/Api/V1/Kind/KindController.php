@@ -25,13 +25,12 @@ class KindController extends Controller
      */
     public function index(Request $request)
     {
-        if(sizeof($request->all())){
-            return new KindCollection(
-                filtersResources($request->all(),'name',
-                    'kinds')
-            );
-        }
-        return $this->success('Success', Kind::all(), 'kinds');
+        return new KindCollection(
+            Kind::where('name', 'like', '%' . $request->get('q') . '%')
+                ->paginate(
+                    (int)$request->get('per_page')
+                )
+        );
     }
 
     /**
