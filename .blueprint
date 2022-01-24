@@ -1,12 +1,48 @@
 created:
-    - database/factories/DepartmentFactory.php
     - database/factories/EmployeeFactory.php
-    - database/migrations/2022_01_13_060708_create_departments_table.php
-    - database/migrations/2022_01_13_060709_create_employees_table.php
-    - app/Models/Department.php
+    - database/factories/StatusFactory.php
+    - database/factories/CategoryFactory.php
+    - database/factories/PriorityFactory.php
+    - database/factories/KindFactory.php
+    - database/factories/TicketFactory.php
+    - database/factories/TrackingTicketEmployeeFactory.php
+    - database/factories/EntryFactory.php
+    - database/migrations/2022_01_18_012309_create_employees_table.php
+    - database/migrations/2022_01_18_012310_create_statuses_table.php
+    - database/migrations/2022_01_18_012311_create_categories_table.php
+    - database/migrations/2022_01_18_012312_create_priorities_table.php
+    - database/migrations/2022_01_18_012313_create_kinds_table.php
+    - database/migrations/2022_01_18_012314_create_tickets_table.php
+    - database/migrations/2022_01_18_012315_create_tracking_ticket_employees_table.php
+    - database/migrations/2022_01_18_012316_create_entries_table.php
+    - database/migrations/2022_01_18_012317_create_entry_ticket_table.php
     - app/Models/Employee.php
+    - app/Models/Status.php
+    - app/Models/Category.php
+    - app/Models/Priority.php
+    - app/Models/Kind.php
+    - app/Models/Ticket.php
+    - app/Models/TrackingTicketEmployee.php
+    - app/Models/Entry.php
 models:
     Departments: { id: 'id unique index', description: 'string:50', is_active: 'boolean default:true', relationships: { hasMany: Employees } }
     Employees: { id: 'id unique index', first_name: 'string:50', last_name: 'string:50', email: 'string:50', department_id: 'int foreign', is_active: 'boolean default:true' }
-    Department: { id: 'id unique index', description: 'string:50', activated: 'boolean default:true', relationships: { hasMany: Employee } }
-    Employee: { id: 'id unique index', first_name: 'string:50', last_name: 'string:50', email: 'string:50', department_id: 'int foreign', activated: 'boolean default:true' }
+    Department: { id: 'id unique index', name: 'string:50', relationships: { hasMany: Employee } }
+    Employee: { id: 'id unique index', first_name: 'string:50', last_name: 'string:50', email: 'string:255 unique index', password: 'string:255', email_verified_at: timestamp, activated: 'boolean default:true', softdeletes: softDeletes, relationships: { hasMany: 'Ticket, Entry' } }
+    Status: { id: 'id unique index', name: 'string:50', softdeletes: softDeletes, relationships: { hasMany: Ticket } }
+    Category: { id: 'id unique index', name: 'string:50', softdeletes: softDeletes, relationships: { hasMany: Ticket } }
+    Priority: { id: 'id unique index', name: 'string:50', softdeletes: softDeletes, relationships: { hasMany: Ticket } }
+    Kind: { id: 'id unique index', name: 'string:50', softdeletes: softDeletes, relationships: { hasMany: Ticket } }
+    Ticket: { id: 'id unique index', date: 'timestamp index', title: 'string:50', description: text, kind_id: 'id foreign:Kind', category_id: 'id foreign:Category', priority_id: 'id foreign:Priority', status_id: 'id foreign:Status', employee_id: 'id foreign:Employee', relationships: { belongsToMany: Entry, hasMany: TrackingTicketEmployee }, softdeletes: softDeletes }
+    Statu: { id: 'id unique index', name: 'string:50', softdeletes: softDeletes, relationships: { hasMany: Ticket } }
+    Ticket_vs_Entry: { ticket_id: 'id foreign:Ticket', entry_id: 'id foreign:Entry', relationships: { belongsToMany: 'Ticket, Entry' }, softdeletes: softDeletes }
+    Entry: { id: 'id unique index', employee_id: 'int foreign:Employee', date_from: 'timestamp nullable', date_to: 'timestamp nullable', note: 'longtext nullable', relationships: { belongsToMany: Ticket }, softdeletes: softDeletes }
+    Tracking_ticket_employee: { id: 'id unique index', ticket_id: 'int foreign:Ticket', employee_id: 'int nullable foreign:Employee' }
+    employee: { id: 'id unique index', first_name: 'string:50', last_name: 'string:50', email: 'string:255 unique index', password: 'string:255', email_verified_at: timestamp, activated: 'boolean default:true', softdeletes: softDeletes, relationships: { hasMany: 'ticket, entry' } }
+    status: { id: 'id unique index', name: 'string:50', softdeletes: softDeletes, relationships: { hasMany: ticket } }
+    category: { id: 'id unique index', name: 'string:50', softdeletes: softDeletes, relationships: { hasMany: ticket } }
+    priority: { id: 'id unique index', name: 'string:50', softdeletes: softDeletes, relationships: { hasMany: ticket } }
+    ticket: { id: 'id unique index', date: 'timestamp index', title: 'string:50', description: text, kind_id: 'id foreign:kind', category_id: 'id foreign:category', priority_id: 'id foreign:priority', status_id: 'id foreign:status', employee_id: 'id foreign:employee', relationships: { belongsToMany: entry, hasMany: trackingticketemployee }, softdeletes: softDeletes }
+    trackingticketemployee: { id: 'id unique index', ticket_id: 'int foreign:ticket', employee_id: 'int nullable foreign:employee' }
+    entry: { id: 'id unique index', employee_id: 'int foreign:employee', date_from: 'timestamp nullable', date_to: 'timestamp nullable', note: 'longtext nullable', relationships: { belongsToMany: ticket }, softdeletes: softDeletes }
+    TrackingTicketEmployee: { id: 'id unique index', ticket_id: 'int foreign:Ticket', employee_id: 'int foreign:Employee' }
