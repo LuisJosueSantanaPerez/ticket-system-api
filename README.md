@@ -25,7 +25,7 @@ It is a basic system in which an employee logs in, can create, update and delete
 Check if `docker-compose` is already installed by entering the following command :
 
 ```bash
-bash $ which docker-compose
+$ which docker-compose
 ```
 
 Check Docker Compose compatibility :
@@ -35,13 +35,13 @@ Check Docker Compose compatibility :
 The following is optional but makes life more enjoyable:
 
 ```bash
-bash $ which make
+$ which make
 ```
 
 On Ubuntu and Debian these are available in the meta-package build-essential. On other distributions, you may need to install the GNU C++ compiler separately.
 
 ```bash
-bash $ sudo apt install build-essential
+$ sudo apt install build-essential
 ```
 
 **Images to use**
@@ -76,19 +76,19 @@ Api documentation enter here please: [**Documentation**](https://documenter.getp
   **1- Clone:**
 
 ```bash
-bash $ git clone [https://github.com/Darknet17/ticket-system-api](https://github.com/Darknet17/ticket-system-api)
+$ git clone https://github.com/Darknet17/ticket-system-api
 ```
 
 2- **We access the bash folder:**
 
 ```bash
-bash $ cd ticket-system-app
+$ cd ticket-system-app
 ```
 
 3-  **Add your file** `.env` **:**
 
 ```bash
-bash $ cp env.example .env
+$ cp env.example .env
 ```
 
 The .env.example file has the following basic configurations:
@@ -106,11 +106,11 @@ DB_PASSWORD=root
 
 ```bash
 
-bash $ docker-compose build
-bash $ docker-compose up -d
-bash $ docker-compose exec app php composer install # load php migration
-bash $ docker-compose exec app php artisan key:generat --seed
-bash $ docker-compose exec app php artisan --seed # load php migration
+$ docker-compose build
+$ docker-compose up -d
+$ docker-compose exec app php composer install # load php migration
+$ docker-compose exec app php artisan key:generat --seed
+$ docker-compose exec app php artisan --seed # load php migration
 ```
 
 # 🎉 Ready  🎉
