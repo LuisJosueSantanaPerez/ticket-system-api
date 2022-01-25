@@ -37,6 +37,9 @@ services:
 
     #MySQL Service
     db:
+        build:
+            context: ./mysql
+            dockerfile: Dockerfile
         image: mariadb:10.3
         container_name: db
         command: mysqld --default-authentication-plugin=mysql_native_password
@@ -52,6 +55,7 @@ services:
         volumes:
             - dbdata:/var/lib/mysql
             - ./mysql/my.cnf:/etc/mysql/my.cnf
+            - ./mysql/init/createdb_init.sql:/docker-entrypoint-initdb.d/createdb_init.sql
 
 #Volumes
 volumes:

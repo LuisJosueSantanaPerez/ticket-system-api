@@ -1,11 +1,8 @@
-
-LABEL maintainer="JM Mella <mellasystems@gmail.com>"
-
+FROM mariadb:10.3
 #####################################
-# Set Timezone
-#####################################
+ADD init/createdb_init.sql /docker-entrypoint-initdb.d/createdb_init.sql
 
-ARG TZ=UTC
+ARG TZ="America/Santo_Domingo"
 ENV TZ ${TZ}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && chown -R mysql:root /var/lib/mysql/
 COPY my.cnf /etc/mysql/conf.d/my.cnf
