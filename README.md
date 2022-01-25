@@ -1,66 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Ticket System Api
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Description:**
 
-## About Laravel
+It is a basic system in which an employee logs in, can create, update and delete tickets, can create an employee, and then can generate a report to obtain the hours worked.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Login**
+- **Create a ticket**
+- **Create employees:**
+- **Create Time entries:**
+- **Reports(Worked):**
+- **Create a ticket**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Install Prerequisites:**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **[GIT](https://git-scm.com/downloads)**
+- **[Docker](https://docs.docker.com/engine/install/)**
+- **[Docker Compose](https://docs.docker.com/compose/install/)**
 
-## Learning Laravel
+Check if `docker-compose` is already installed by entering the following command :
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+bash $ which docker-compose
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Check Docker Compose compatibility :
 
-## Laravel Sponsors
+[Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+The following is optional but makes life more enjoyable:
 
-### Premium Partners
+```bash
+bash $ which make
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+On Ubuntu and Debian these are available in the meta-package build-essential. On other distributions, you may need to install the GNU C++ compiler separately.
 
-## Contributing
+```bash
+bash $ sudo apt install build-essential
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Images to use**
 
-## Code of Conduct
+- [Nginx](https://hub.docker.com/_/nginx/)
+- [MariaDB](https://mariadb.org/download/?t=mariadb&p=mariadb&r=10.6.5&os=Linux&cpu=x86_64&pkg=tar_gz&i=systemd&m=osuosl)
+- [PHP-FPM](https://hub.docker.com/r/nanoninja/php-fpm/)
+- [Composer](https://hub.docker.com/_/composer/)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+You should be careful when installing third party web servers such as MySQL or Nginx.
 
-## Security Vulnerabilities
+This project use the following ports :
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Tech     |          Port |
+|----------|--------------:|
+| MariaDB  |          3306 |
+| Nginx    |          8000 |
 
-## License
+**Technology**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The ticketing system API uses laravel which provides a full-featured environment for large-scale, maintainable applications.
+
+- (Laravel) is a framework that allows the use of an elegant and expressive syntax to create code in a simple way and allowing a multitude of functionalities. It tries to take advantage of the best of other frameworks and take advantage of the features of the latest versions of PHP.
+
+**Usage:**
+
+The api system has a default user which is `email: admin@admin password: admin1234`
+Api documentation enter here please: [**Documentation**](https://documenter.getpostman.com/view/3381918/UVXqFt81)
+
+**Installation:**
+
+  **1- Clone:**
+
+```bash
+bash $ git clone [https://github.com/Darknet17/ticket-system-api](https://github.com/Darknet17/ticket-system-api)
+```
+
+2- **We access the bash folder:**
+
+```bash
+bash $ cd ticket-system-app
+```
+
+3-  **Add your file** `.env` **:**
+
+```bash
+bash $ cp env.example .env
+```
+
+The .env.example file has the following basic configurations:
+
+```bash
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=db_api_tickets
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+
+4- **Run this command to run it in docker:**
+
+```bash
+
+bash $ docker-compose build
+bash $ docker-compose up -d
+bash $ docker-compose exec app php composer install # load php migration
+bash $ docker-compose exec app php artisan key:generat --seed
+bash $ docker-compose exec app php artisan --seed # load php migration
+```
+
+# 🎉 Listo  🎉
