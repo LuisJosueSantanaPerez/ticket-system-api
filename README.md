@@ -11,6 +11,11 @@ It is a basic system in which an employee logs in, can create, update and delete
 - **Reports(Worked):**
 - **Create a ticket**
 
+
+**ER Diagram**
+
+![ERDDiagram1.jpg](documentation/ERDDiagram1.jpg)
+
 **Install Prerequisites:**
 
 - **[GIT](https://git-scm.com/downloads)**
