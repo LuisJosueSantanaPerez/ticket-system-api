@@ -109,7 +109,7 @@ DB_PASSWORD=root
 $ docker-compose build
 $ docker-compose up -d
 $ docker-compose exec app php composer install # load php migration
-$ docker-compose exec app php artisan key:generat --seed
+$ docker-compose exec app php artisan key:generate
 $ docker-compose exec app php artisan --seed # load php migration
 ```
 
