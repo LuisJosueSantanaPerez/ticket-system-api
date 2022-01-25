@@ -105,7 +105,6 @@ DB_PASSWORD=root
 4- **Run this command to run it in docker:**
 
 ```bash
-
 $ docker-compose build
 $ docker-compose up -d
 $ docker-compose exec app php composer install # load php migration
