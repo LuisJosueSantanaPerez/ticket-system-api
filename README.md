@@ -111,7 +111,6 @@ $ docker run --rm -v "${PWD}:/var/www" -w /var/www composer:2.0.11 install
 ```bash
 $ docker-compose build
 $ docker-compose up -d
-$ docker-compose exec app php composer install # load php migration
 $ docker-compose exec app php artisan key:generate
 $ docker-compose exec app php artisan --seed # load php migration
 ```
