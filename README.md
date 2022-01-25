@@ -102,10 +102,13 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-4- **Run this command to run it in docker:**
-
+4- **Install dependencies:**
 ```bash
 $ docker run --rm -v "${PWD}:/var/www" -w /var/www composer:2.0.11 install
+````
+5- **Run this command to run it in docker:**
+
+```bash
 $ docker-compose build
 $ docker-compose up -d
 $ docker-compose exec app php composer install # load php migration
