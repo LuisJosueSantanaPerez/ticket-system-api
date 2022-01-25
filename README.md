@@ -113,4 +113,4 @@ bash $ docker-compose exec app php artisan key:generat --seed
 bash $ docker-compose exec app php artisan --seed # load php migration
 ```
 
-# 🎉 Listo  🎉
+# 🎉 Ready  🎉
